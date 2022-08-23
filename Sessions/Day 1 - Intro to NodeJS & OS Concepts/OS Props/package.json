@@ -1,0 +1,11 @@
+{
+  "name": "os-props",
+  "version": "1.0.0",
+  "description": "for accessing os props",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sid",
+  "license": "ISC"
+}
