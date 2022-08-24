@@ -1,0 +1,5 @@
+Error: Error: ENOENT: no such file or directory, open 'E:\My Space\Personal\My Projects\FreeLancing\EdYoda\NodeJS\GIT\zekelabs-nodejs\Sessions\Day 2 - NodeJS & Its Components\Practice\areadMe.txt', Date: Wed Aug 24 2022 21:44:47 GMT+0530 (India Standard Time)
+Error: Error: ENOENT: no such file or directory, open 'E:\My Space\Personal\My Projects\FreeLancing\EdYoda\NodeJS\GIT\zekelabs-nodejs\Sessions\Day 2 - NodeJS & Its Components\Practice\sid\readMe.txt', Date: Wed Aug 24 2022 21:49:09 GMT+0530 (India Standard Time)
+Error: Error: ENOENT: no such file or directory, open './OMG/readMe.txt', Date: Wed Aug 24 2022 22:01:55 GMT+0530 (India Standard Time)
+Error: Error: ENOENT: no such file or directory, open './app/afiles/readMe.txt', Date: Wed Aug 24 2022 22:12:49 GMT+0530 (India Standard Time)
+Error: Error: ENOENT: no such file or directory, open './app/afiles/readMe.txt', Date: Wed Aug 24 2022 22:13:46 GMT+0530 (India Standard Time)

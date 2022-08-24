@@ -1,0 +1,12 @@
+
+
+Stateful
+Request 1 - Give me first 50 records from the database
+Request 2 - Give me next 50 records from the database
+Note - remember the position in the result-set 
+
+Stateless 
+Request 1 - Give me first 50 records from the database
+Request 2 - Give me next 50 records from the database (Position 51 -100)
+Note - Every request is independent which doesn't hold any result from previous req so need 
+to send the position on response

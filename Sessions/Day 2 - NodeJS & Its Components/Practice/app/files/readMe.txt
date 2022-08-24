@@ -1,0 +1,1 @@
+Hello this file can be read using Node.js synchronously & asynchronously.
