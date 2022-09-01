@@ -1,0 +1,14 @@
+{
+  "name": "node-pratice",
+  "version": "1.0.0",
+  "description": "For practicing purpose only",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sid",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^4.9.1"
+  }
+}
