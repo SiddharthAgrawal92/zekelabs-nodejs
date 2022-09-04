@@ -56,10 +56,12 @@ const updateItem = async (id, payload) => {
     const client = await main().catch(console.error);
     try {
         await client.connect().catch(err => console.error(err));
-
         const result = await client.db('myDb').collection('items').updateOne({ _id: ObjectId(id) }, {
             $set: payload
         });
+        // const result = await client.db('mongodbVSCodePlaygroundDB').collection('sales').updateOne({ _id: parseInt(id) }, {
+        //     $set: payload
+        // });
         if (result.modifiedCount) {
             return {
                 msg: "Item has been updated successfully!"
