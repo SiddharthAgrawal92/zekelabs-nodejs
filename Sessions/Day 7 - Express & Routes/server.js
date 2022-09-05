@@ -11,6 +11,7 @@ const hostname = '127.0.0.1';
 const port = process.env.PORT || 8081;
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/server', (req, res, next) => {
     console.log(new Date());
