@@ -1,24 +1,13 @@
 const routes = require('express').Router();
+const itemRoutes = require('./items');
 
 routes.get('/', (req, res) => {
-    console.log('Request Query Params:', req.query);
+    // res.render('index.pug', { name: 'sid', message: "This message is send from server" });
+    // res.render('index2.jade', { name: 'sid', message: "This message is send from server" });
     res.send('Connected!');
 });
 
-routes.get('/items/:id', async (req, res) => {
-    console.log('Request Path Params:', req.params);
-    res.send({ msg: 'Path param fetched!', data: result });
-});
-
-routes.get('/items/:id/:name', (req, res) => {
-    console.log('Request Path Params:', req.params);
-    res.send('Connected!');
-});
-
-routes.post('/items', (req, res) => {
-    console.log('Request Body:', req.body);
-    res.send(req.body);
-});
+routes.use('/items', itemRoutes);
 
 routes.get('*', (req, res) => {
     res.status(404).send('Sorry, this URI is not supported by our app!');
