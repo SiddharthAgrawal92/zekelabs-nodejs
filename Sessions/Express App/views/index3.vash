@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>@model.name</title>
+  </head>
+  <body>
+    <h1>@model.message</h1>
+  </body>
+</html>
+

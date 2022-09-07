@@ -2,9 +2,27 @@ const routes = require('express').Router();
 const itemRoutes = require('./items');
 
 routes.get('/', (req, res) => {
-    // res.render('index.pug', { name: 'sid', message: "This message is send from server" });
-    // res.render('index2.jade', { name: 'sid', message: "This message is send from server" });
-    res.send('Connected!');
+    res.render('index3', { name: 'sid', message: "This message is send from server" });
+    // res.render('index', { name: 'sid', message: "This message is send from server" });
+    // res.render('index2', {
+    //     name: 'sid', message: "This message is send from server", myList: [
+    //         {
+    //             name: 'Sid'
+    //         },
+    //         {
+    //             name: 'John'
+    //         },
+    //         {
+    //             name: 'Peter'
+    //         },
+    //         {
+    //             name: 'Mark'
+    //         }, {
+    //             name: 'Charlie'
+    //         }
+    //     ]
+    // });
+    // res.send('Connected!');
 });
 
 routes.use('/items', itemRoutes);
