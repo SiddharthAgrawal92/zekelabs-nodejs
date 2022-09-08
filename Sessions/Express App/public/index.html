@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script defer src="http://localhost:8085/socket.io/socket.io.js"></script>
+    <script defer src="socketHandler.js"></script>
+    <title>My Chat</title>
 </head>
 
 <body>
-    This file is served statically from the server
+    Messages goes here: <br />
+    <div id="messageContainer"></div>
+    <br />
+    <form id="send-container">
+        <input type="text" id="message-input">
+        <button type="submit" id="send-button">Send</button>
+    </form>    
 </body>
 
 </html>
