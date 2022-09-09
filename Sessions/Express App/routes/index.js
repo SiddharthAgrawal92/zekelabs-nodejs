@@ -1,5 +1,6 @@
 const routes = require('express').Router();
 const itemRoutes = require('./items');
+const path = require('path');
 
 routes.get('/', (req, res) => {
     res.render('index3', { name: 'sid', message: "This message is send from server" });
@@ -27,12 +28,22 @@ routes.get('/', (req, res) => {
 
 routes.use('/items', itemRoutes);
 
-routes.get('*', (req, res) => {
-    res.status(404).send('Sorry, this URI is not supported by our app!');
-});
+/**
+ * one way to handle invalid routes but this needs to be handled for every http methods
+ */
+// routes.get('*', (req, res) => {
+//     res.status(404).send('Sorry, this URI is not supported by our app!');
+// });
 
-routes.post('*', (req, res) => {
-    res.status(404).send('Sorry, this URI is not supported by our app!');
+// routes.post('*', (req, res) => {
+//     res.status(404).send('Sorry, this URI is not supported by our app!');
+// });
+
+/**
+ * This can handle all http methods
+ */
+routes.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, '../htmlFile/notFound.html'));
 });
 
 module.exports = routes;

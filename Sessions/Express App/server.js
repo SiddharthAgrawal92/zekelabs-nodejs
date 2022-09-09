@@ -8,7 +8,10 @@ const express = require('express'),
         cors: {
             origin: '*'
         }
-    });
+    }),
+    fs = require('fs'),
+    winston = require('winston'),
+    expressWinston = require('express-winston');
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 8081;
@@ -22,6 +25,7 @@ class Server {
         this.initViewEngine();
         this.initStaticFiles();
         this.initMiddleWares();
+        this.initExpressWinstonLogger();
         this.initRoutes();
         this.start();
     }
@@ -72,10 +76,37 @@ class Server {
         app.use(cors());
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
-        app.use('/server', (req, res, next) => {
-            console.log(new Date());
+        app.use('/', (req, res, next) => {
+            fs.appendFile('./logs/apiCalls.log', `${JSON.stringify({
+                url: req.url,
+                method: req.method,
+                origin: req.headers.origin,
+                userAgent: req.headers['User-Agent'],
+                host: req.headers.host,
+                body: req.body,
+                query: req.params
+            })}\n`, 'utf-8', (err) => {
+                if (err) throw err;
+            })
             next();
         });
+    }
+
+    initExpressWinstonLogger() {
+        app.use(expressWinston.logger({
+            transports: [
+                new winston.transports.File({ filename: './logs/logs.log' })
+            ],
+            format: winston.format.combine(
+                winston.format.json(),
+                winston.format.colorize(),
+            ),
+            meta: true,
+            msg: "HTTP {{req.method}} {{req.url}}",
+            expressFormat: true,
+            colorize: true,
+            ignoredRoutes: (req, res) => { return false; }
+        }))
     }
 
     initStaticFiles() {
