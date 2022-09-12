@@ -37,10 +37,10 @@ itemRoutes.get('/:id', (req, res) => {
 itemRoutes.post('/', [
     //check if field exists
     check('username', 'this field is required').exists(),
-    
+
     //validates all chained methods placed before bail() and skips all those placed afterwards
     // check('username', 'provide a proper email').isEmail().bail().isLength({ min: 8, max: 15 })
-    
+
     //check if field is a valid email
     check('username', 'provide a proper username').isEmail(),
     check('username', 'username should be in range 8-15').isLength({ min: 8, max: 15 }),
@@ -61,7 +61,7 @@ itemRoutes.post('/', [
 
     //converts value to an array
     check('subItems').toArray(), // "value" --> ["value"], ["value"] --> ["value"], undefined: []
-    
+
     //sets a default value if unavailable
     check('quantity').default(1)
 
@@ -102,6 +102,20 @@ itemRoutes.put('/:id', (req, res) => {
 
 itemRoutes.delete('/:id', (req, res) => {
     Items.deleteOne({ _id: req.params.id }, (err, data) => {
+        if (err) {
+            console.error(err);
+            res.send('Error while deleting an item');
+        } else {
+            res.status(200).json(data);
+        }
+    });
+});
+
+/**
+ * Delete all items after an ID
+ */
+itemRoutes.delete('/all/:id', (req, res) => {
+    Items.deleteMany({ _id: { $gt: req.params.id } }, (err, data) => {
         if (err) {
             console.error(err);
             res.send('Error while deleting an item');

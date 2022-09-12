@@ -1,5 +1,7 @@
 const routes = require('express').Router();
 const itemRoutes = require('./items');
+const UserRoutes = require('./users');
+const AuthRoutes = require('./auth');
 const path = require('path');
 
 routes.get('/', (req, res) => {
@@ -27,6 +29,10 @@ routes.get('/', (req, res) => {
 });
 
 routes.use('/items', itemRoutes);
+
+routes.use('/user', UserRoutes);
+
+routes.use('/auth', AuthRoutes);
 
 /**
  * one way to handle invalid routes but this needs to be handled for every http methods

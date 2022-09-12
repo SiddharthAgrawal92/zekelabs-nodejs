@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const express = require('express'),
     bodyParser = require('body-parser'),
     routes = require('./routes'),
@@ -13,8 +16,6 @@ const express = require('express'),
     winston = require('winston'),
     expressWinston = require('express-winston');
 
-const hostname = '127.0.0.1';
-const port = process.env.PORT || 8081;
 const mongoConnectionStr = 'mongodb+srv://sid1605:sT2kdICiGGtnsmgz@cluster0.3o8fgzr.mongodb.net/myDb';
 const app = express();
 
@@ -46,7 +47,7 @@ class Server {
         //     })
         // });
         const users = {};
-        io.on('connection', socket => {
+        io.on('connection', socket => { //handshake connection
             socket.emit('socket_message', { msg: '🙏Welcome to our chat 🙏' });
             socket.on('new-user', name => {
                 // console.log(`New user ${name} is connected to the socket!`);
@@ -59,8 +60,8 @@ class Server {
             socket.on('disconnect', () => {
                 socket.broadcast.emit('user-disconnected', users[socket.id]);
                 delete users[socket.id];
-            })
-        })
+            });
+        });
     }
 
     initDB() {
@@ -126,8 +127,8 @@ class Server {
     }
 
     start() {
-        app.listen(port, hostname, () => {
-            console.log(`Server is running on port: http://${hostname}:${port}`);
+        app.listen(process.env.PORT, process.env.HOSTNAME, () => {
+            console.log(`Server is running on port: http://${process.env.HOSTNAME}:${process.env.PORT}`);
         });
     }
 }

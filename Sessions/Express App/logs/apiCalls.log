@@ -23,3 +23,38 @@
 {"url":"/items","method":"POST","host":"127.0.0.1:8081","body":{"username":"s@1.com","name":"Cucumber","confirmName":"Cucumber","type":"Vegetableee","desc":"HAPPY TO SEE YOU HERE","price":30,"tags":["Facial","Salad"],"note":"    I am writing this to greet you with X) <script>evilScript()</script>  "},"query":{}}
 {"url":"/items","method":"POST","host":"127.0.0.1:8081","body":{"username":"s@1.com","name":"Cucumber","confirmName":"Cucumber","type":"Vegetableee","desc":"HAPPY TO SEE YOU HERE","price":30,"tags":["Facial","Salad"],"note":"    I am writing this to greet you with X) <script>evilScript()</script>  "},"query":{}}
 {"url":"/items","method":"POST","host":"127.0.0.1:8081","body":{"username":"useras@1.com","name":"Cucumber","confirmName":"Cucumber","type":"Vegetableee","desc":"HAPPY TO SEE YOU HERE","quantity":5,"price":30,"tags":["Facial","Salad"],"note":"    I am writing this to greet you with X) <script>evilScript()</script>  "},"query":{}}
+{"url":"/items","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/items/6310d35c2a8ecde43905a972","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/items/all/63176e9b01293c73d8c0ccf7","method":"DELETE","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid#123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"He@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"bdmin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"bdmin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"bdmin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"bdmin"},"query":{}}
+{"url":"/","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/favicon.ico","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"bdmin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid123","password":"Hello@123","name":"Siddharth Agrawal","mobile":1234567890,"role":"admin"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123","name":"Jitendra","mobile":1000000000,"role":"user"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123","name":"Jitendra","mobile":123456789,"role":"user"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123","name":"Jitendra","mobile":1234567890,"role":"user"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"user123","password":"Bye@12345","name":"Sample User","mobile":1234567890,"role":"user"},"query":{}}
+{"url":"/user/register","method":"POST","host":"127.0.0.1:8081","body":{"userName":"user123","password":"Bye@12345","name":"Sample User","mobile":1234567890,"role":"user"},"query":{}}
+{"url":"/auth/login","method":"GET","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"GET","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"GET","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"GET","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"GET","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"1eyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jtendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jtendra123","password":"Heyy@123"},"query":{}}
