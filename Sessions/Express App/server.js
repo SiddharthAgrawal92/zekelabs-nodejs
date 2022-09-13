@@ -14,19 +14,21 @@ const express = require('express'),
     }),
     fs = require('fs'),
     winston = require('winston'),
-    expressWinston = require('express-winston');
+    expressWinston = require('express-winston'),
+    cookieParser = require('cookie-parser'),
+    helmet = require('helmet');
 
 const mongoConnectionStr = 'mongodb+srv://sid1605:sT2kdICiGGtnsmgz@cluster0.3o8fgzr.mongodb.net/myDb';
 const app = express();
 
 class Server {
     constructor() {
+        this.initExpressWinstonLogger();
         this.initDB();
         this.initSocketConnection();
         this.initViewEngine();
         this.initStaticFiles();
         this.initMiddleWares();
-        this.initExpressWinstonLogger();
         this.initRoutes();
         this.start();
     }
@@ -74,7 +76,16 @@ class Server {
     }
 
     initMiddleWares() {
-        app.use(cors());
+        app.use(helmet());
+        app.use(cookieParser());
+        app.use(cors((req, cb) => {
+            let options = { credentials: false, origin: false };
+            if (process.env.WHITELISTED_ORIGINS.indexOf(req.headers.origin) !== -1) {
+                options.credentials = true;
+                options.origin = true;
+            }
+            cb(null, options);
+        }));
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use('/', (req, res, next) => {
@@ -106,7 +117,8 @@ class Server {
             msg: "HTTP {{req.method}} {{req.url}}",
             expressFormat: true,
             colorize: true,
-            ignoredRoutes: (req, res) => { return false; }
+            ignoredRoutes: ['/auth/login', '/user/register'],
+            headerBlacklist: ['x-access-token', 'cookie']
         }))
     }
 

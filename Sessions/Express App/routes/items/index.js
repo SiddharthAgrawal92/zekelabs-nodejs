@@ -2,11 +2,12 @@
 const itemRoutes = require('express').Router();
 const Items = require('./items.model');
 const { check, validationResult } = require('express-validator');
+const auth = require('../../middlewares/auth.middleware.js');
 
 /**
  * GET - HTTP method to get all items
  */
-itemRoutes.get('/', (req, res) => {
+itemRoutes.get('/', auth, (req, res) => {
     Items.find({}).exec((err, items) => {
         if (err) {
             console.error(err);
@@ -20,7 +21,7 @@ itemRoutes.get('/', (req, res) => {
 /**
  * GET - HTTP method to get item by ID
  */
-itemRoutes.get('/:id', (req, res) => {
+itemRoutes.get('/:id', auth, (req, res) => {
     Items.find({ _id: req.params.id }).exec((err, item) => {
         if (err) {
             console.error(err);
@@ -34,7 +35,7 @@ itemRoutes.get('/:id', (req, res) => {
 /**
  * POST - HTTP method to store the items
  */
-itemRoutes.post('/', [
+itemRoutes.post('/', auth, [
     //check if field exists
     check('username', 'this field is required').exists(),
 
@@ -85,7 +86,7 @@ itemRoutes.post('/', [
 /**
  * PUT - HTTP method to update the item
  */
-itemRoutes.put('/:id', (req, res) => {
+itemRoutes.put('/:id', auth, (req, res) => {
     Items.findOneAndUpdate({ _id: req.params.id }, req.body, (err, items) => {
         if (err) {
             console.error(err);
@@ -100,7 +101,7 @@ itemRoutes.put('/:id', (req, res) => {
  * DELETE - HTTP method to delete an item by ID
  */
 
-itemRoutes.delete('/:id', (req, res) => {
+itemRoutes.delete('/:id', auth, (req, res) => {
     Items.deleteOne({ _id: req.params.id }, (err, data) => {
         if (err) {
             console.error(err);
@@ -114,7 +115,7 @@ itemRoutes.delete('/:id', (req, res) => {
 /**
  * Delete all items after an ID
  */
-itemRoutes.delete('/all/:id', (req, res) => {
+itemRoutes.delete('/all/:id', auth, (req, res) => {
     Items.deleteMany({ _id: { $gt: req.params.id } }, (err, data) => {
         if (err) {
             console.error(err);

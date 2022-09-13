@@ -1,6 +1,7 @@
 let AuthRoutes = require('express').Router();
 const { check, validationResult, header } = require('express-validator');
 let User = require('../users/user.model');
+let jwt = require('jsonwebtoken');
 
 AuthRoutes.post('/login', [
     check('userName', 'userName is required').exists(),
@@ -23,7 +24,6 @@ AuthRoutes.post('/login', [
             } else if (!userDetail.comparePassword(req.body.password)) {
                 res.status(401).send({ msg: "Please enter a correct userName or Password." });
             } else {
-                res.status(200).send({ msg: "Login Successful!" });
                 //api-domain -> //www.example.com 
                 //JSON WEB TOKEN 
                 // part_1 - header
@@ -43,7 +43,25 @@ AuthRoutes.post('/login', [
                 //     exp: expiry, //token expiry time
                 //     isAdmin: true //custom claim of your app
                 // }
+                // res.status(200).send({ msg: "Login Successful!" });
+                let claims = {
+                    iss: `http://${process.env.HOSTNAME}:${process.env.PORT}`,
+                    sub: userDetail.userName,
+                    scope: userDetail.role
+                }
+                let token = jwt.sign(claims, process.env.JWT_PRIVATE_KEY, {
+                    algorithm: 'HS256',
+                    expiresIn: process.env.JWT_EXPIRES_IN
+                });
+                //token set as object in response
+                // res.status(200).send({ msg: 'Login Successful', access_token: token, expiresIn: process.env.JWT_EXPIRES_IN });
 
+                //jwt token set as cookie in response
+                res.cookie('access_token', token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    maxAge: process.env.JWT_EXPIRES_IN
+                }).status(200).send({ msg: 'Login Successful' });
             }
         }
     });
