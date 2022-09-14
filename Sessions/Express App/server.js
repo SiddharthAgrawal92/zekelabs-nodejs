@@ -16,7 +16,8 @@ const express = require('express'),
     winston = require('winston'),
     expressWinston = require('express-winston'),
     cookieParser = require('cookie-parser'),
-    helmet = require('helmet');
+    helmet = require('helmet'),
+    compression = require('compression');
 
 const mongoConnectionStr = 'mongodb+srv://sid1605:sT2kdICiGGtnsmgz@cluster0.3o8fgzr.mongodb.net/myDb';
 const app = express();
@@ -49,21 +50,22 @@ class Server {
         //     })
         // });
         const users = {};
-        io.on('connection', socket => { //handshake connection
-            socket.emit('socket_message', { msg: '🙏Welcome to our chat 🙏' });
-            socket.on('new-user', name => {
+        io.on('connection', clientSocket => { //handshake connection
+            clientSocket.emit('socket_message', { msg: '🙏Welcome to our chat 🙏' });
+            clientSocket.on('new-user', name => {
                 // console.log(`New user ${name} is connected to the socket!`);
                 users[socket.id] = name;
-                socket.broadcast.emit('user-connected', name);
+                clientSocket.broadcast.emit('user-connected', name);
             });
-            socket.on('client_message', msg => {
-                socket.broadcast.emit('socket_message', { msg: msg, username: users[socket.id] });
+            clientSocket.on('client_message', msg => {
+                clientSocket.broadcast.emit('socket_message', { msg: msg, username: users[clientSocket.id] });
             });
-            socket.on('disconnect', () => {
-                socket.broadcast.emit('user-disconnected', users[socket.id]);
-                delete users[socket.id];
+            clientSocket.on('disconnect', () => {
+                clientSocket.broadcast.emit('user-disconnected', users[clientSocket.id]);
+                delete users[clientSocket.id];
             });
         });
+        app.set('socket_io_instance', io);
     }
 
     initDB() {
@@ -78,6 +80,9 @@ class Server {
     initMiddleWares() {
         app.use(helmet());
         app.use(cookieParser());
+        app.use(compression({
+            level: 9
+        }));
         app.use(cors((req, cb) => {
             let options = { credentials: false, origin: false };
             if (process.env.WHITELISTED_ORIGINS.indexOf(req.headers.origin) !== -1) {

@@ -2,6 +2,7 @@ let AuthRoutes = require('express').Router();
 const { check, validationResult, header } = require('express-validator');
 let User = require('../users/user.model');
 let jwt = require('jsonwebtoken');
+let auth = require('../../middlewares/auth.middleware');
 
 AuthRoutes.post('/login', [
     check('userName', 'userName is required').exists(),
@@ -43,28 +44,78 @@ AuthRoutes.post('/login', [
                 //     exp: expiry, //token expiry time
                 //     isAdmin: true //custom claim of your app
                 // }
-                // res.status(200).send({ msg: "Login Successful!" });
-                let claims = {
-                    iss: `http://${process.env.HOSTNAME}:${process.env.PORT}`,
-                    sub: userDetail.userName,
-                    scope: userDetail.role
-                }
-                let token = jwt.sign(claims, process.env.JWT_PRIVATE_KEY, {
-                    algorithm: 'HS256',
-                    expiresIn: process.env.JWT_EXPIRES_IN
-                });
-                //token set as object in response
-                // res.status(200).send({ msg: 'Login Successful', access_token: token, expiresIn: process.env.JWT_EXPIRES_IN });
 
-                //jwt token set as cookie in response
-                res.cookie('access_token', token, {
+
+                const tokenDetails = getTokenDetails(userDetail);
+
+                //token set as object in response
+                // res.status(200).send({
+                //     msg: 'Login Successful',
+                //     access_token: tokenDetails.accessToken,
+                //     refresh_token: tokenDetails.refreshToken,
+                //     expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
+
+                // });
+
+                // jwt token set as cookie in response
+                res.cookie('access_token', tokenDetails.accessToken, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === 'production',
-                    maxAge: process.env.JWT_EXPIRES_IN
-                }).status(200).send({ msg: 'Login Successful' });
+                    maxAge: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN
+                }).status(200).send({ msg: 'Login Successful', expiry: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN });
             }
         }
     });
 });
+
+AuthRoutes.get('/refresh', auth, (req, res) => {
+
+    const currentTimeInSecs = Math.round(Number(new Date() / 1000));
+    if (req.user.exp - currentTimeInSecs > 30) {
+        return res.status(401).send('Request for a new token is received before before 30 secs of expiry of access_token');
+    }
+
+    let userDetail = {
+        userName: req.user.sub,
+        role: req.user.scope
+    }
+    const newTokenDetails = getTokenDetails(userDetail);
+    res.cookie('access_token', newTokenDetails.accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN
+    }).status(200).send({ msg: 'Login Successful' });
+});
+
+//Problem
+//I have 3 devices
+//Logged in to all devices
+//all my devices are stolen so robber will have access to my login sessions for an indefinite time
+
+//Solution
+//storage of refresh token in db
+//We can use redis package in node js  - it is a nosql db that's fast to persist the data in key-value pair.
+//introduce an endpoint to revoke access from all devices
+//on user authorization to above request we should remove all the refresh token where they are persisted
+
+const getTokenDetails = (userDetail) => {
+    let claims = {
+        iss: `http://${process.env.HOSTNAME}:${process.env.PORT}`,
+        sub: userDetail.userName,
+        scope: userDetail.role
+    }
+    let accessToken = jwt.sign(claims, process.env.JWT_ACCESS_TOKEN_PRIVATE_KEY, {
+        algorithm: 'HS256',
+        expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN
+    });
+    // let refreshToken = jwt.sign(claims, process.env.JWT_REFRESH_TOKEN_PRIVATE_KEY, {
+    //     algorithm: 'HS256',
+    //     expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN
+    // });
+    return {
+        accessToken: accessToken,
+        // refreshToken: refreshToken
+    }
+}
 
 module.exports = AuthRoutes;

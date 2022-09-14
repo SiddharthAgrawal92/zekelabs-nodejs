@@ -2,28 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import socketClient from 'socket.io-client';
-const wsURL = 'ws://localhost:8085';
+const socketUrl = 'http://localhost:8085';
+let socket = socketClient(socketUrl);
 
 function App() {
   const [data, setData] = useState('');
-  const [token, setToken] = useState('');
   const [serverPackets, setServerPackets] = useState('');
-  const socket = useRef();
 
-  // useEffect(() => {
-  //   socket.current = socketClient(wsURL);
-  //   socket.current.on('connect', () => {
-  //     const connectionMsg = `Connected to Web socket at: ${wsURL}`;
-  //     console.log(connectionMsg);
-  //     setData(connectionMsg)
-  //   });
-  //   socket.current.on('server_data', msg => {
-  //     setServerPackets(prevVal => {
-  //       prevVal = [...prevVal, msg];
-  //       return prevVal;
-  //     });
-  //   })
-  // }, [])  
+  useEffect(() => {
+    socket.on('server_data', msg => {
+      setServerPackets(prevVal => {
+        prevVal = [...prevVal, msg];
+        return prevVal;
+      });
+    })
+  }, [])
 
   // //button to show all movies having IMDB rating > 8
   // const postData = async () => {
@@ -56,26 +49,36 @@ function App() {
     })
   }
 
+  const handleRefreshToken = () => {
+    axios.get('http://localhost:8081/auth/refresh', { withCredentials: true }).then(res => {
+      // setData(res.data);
+      // if (res.data && res.data.access_token) {
+      //   indexedDB.open('access_token');
+      //   indexedDB.access_token = res.data.access_token;
+      // }
+    })
+  }
+
   const getData = () => {
     setData([]);
-    axios.get('http://127.0.0.1:8081/items', { withCredentials: true }).then(res => {
+    axios.get('http://localhost:8081/items', { withCredentials: true }).then(res => {
       if (res.data) {
         setData(res.data);
       }
     });
   }
 
-  // axios.interceptors.request.use(config => {
-  //   if (config.url !== 'http://localhost:8081/auth/login') {
-  //     config.headers['x-access-token'] = indexedDB.access_token;
-  //   }
-  //   return config;
-  // })
+  axios.interceptors.request.use(config => {
+    if (config.url !== 'http://localhost:8081/auth/login') {
+      config.headers['x-access-token'] = indexedDB.access_token;
+    }
+    return config;
+  })
 
   return (
     <div className="App">
       <header className="App-header">
-        Response : {JSON.stringify(data)}
+        {/* Response : {JSON.stringify(data)} */}
         {/* <br />
         <br />
         <button onClick={getData}>Get Data</button>
@@ -84,11 +87,14 @@ function App() {
         <br />
         <button onClick={sendToServerUsingWS}>Send Data to Server using WS</button>
         Server Packets :
-        <br />
-        {JSON.stringify(serverPackets)} */}
+        <br />*/}
         <button onClick={handleLogin}>Login</button>
         <br />
-        <button onClick={getData}>Get Data</button>
+        <button onClick={handleRefreshToken}>Refresh Token</button>
+        <br />
+        <button onClick={getData}>Get Data Using API</button>
+
+        {JSON.stringify(serverPackets)}
       </header>
     </div>
   );

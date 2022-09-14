@@ -9,7 +9,14 @@ const verifyToken = (req, res, next) => {
     }
 
     try {
-        let decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+        // let decode;
+        // if (req.originalUrl === '/auth/refresh') {
+        //     decoded = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_PRIVATE_KEY);
+        // } else {
+        // decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_PRIVATE_KEY);
+        // }
+
+        const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_PRIVATE_KEY);
         req.user = decoded;
     } catch (e) {
         if (e instanceof jwt.JsonWebTokenError) {
