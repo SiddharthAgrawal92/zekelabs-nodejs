@@ -1,8 +1,9 @@
 const routes = require('express').Router();
-const itemRoutes = require('./items');
-const UserRoutes = require('./users');
-const AuthRoutes = require('./auth');
+const itemRoutes = require('./items.routes');
+const UserRoutes = require('./users.routes');
+const AuthRoutes = require('./auth.routes');
 const path = require('path');
+const PostsRoutes = require('./posts.routes');
 
 routes.get('/', (req, res) => {
     res.render('index3', { name: 'sid', message: "This message is send from server" });
@@ -33,6 +34,8 @@ routes.use('/items', itemRoutes);
 routes.use('/user', UserRoutes);
 
 routes.use('/auth', AuthRoutes);
+
+routes.use('/posts', PostsRoutes);
 
 /**
  * one way to handle invalid routes but this needs to be handled for every http methods

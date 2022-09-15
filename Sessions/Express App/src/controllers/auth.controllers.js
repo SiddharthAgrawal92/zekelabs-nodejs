@@ -1,21 +1,7 @@
-let AuthRoutes = require('express').Router();
-const { check, validationResult, header } = require('express-validator');
-let User = require('../users/user.model');
+let User = require('../models/user.model');
 let jwt = require('jsonwebtoken');
-let auth = require('../../middlewares/auth.middleware');
 
-AuthRoutes.post('/login', [
-    check('userName', 'userName is required').exists(),
-    check('userName', 'userName should be of string type').isString(),
-
-    check('password', 'password is required').exists(),
-    check('password', 'password should be of string type').isString()
-], (req, res) => {
-    let errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).send({ errors: errors.array() });
-    }
-
+const login = (req, res) => {
     User.findOne({ userName: req.body.userName }, function (err, userDetail) {
         if (err) {
             res.status(500).send({ msg: "Something went wrong." });
@@ -66,9 +52,9 @@ AuthRoutes.post('/login', [
             }
         }
     });
-});
+}
 
-AuthRoutes.get('/refresh', auth, (req, res) => {
+const refreshToken = (req, res) => {
 
     const currentTimeInSecs = Math.round(Number(new Date() / 1000));
     if (req.user.exp - currentTimeInSecs > 30) {
@@ -85,7 +71,8 @@ AuthRoutes.get('/refresh', auth, (req, res) => {
         secure: process.env.NODE_ENV === 'production',
         maxAge: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN
     }).status(200).send({ msg: 'Login Successful' });
-});
+}
+
 
 //Problem
 //I have 3 devices
@@ -118,4 +105,7 @@ const getTokenDetails = (userDetail) => {
     }
 }
 
-module.exports = AuthRoutes;
+module.exports = {
+    login,
+    refreshToken
+}

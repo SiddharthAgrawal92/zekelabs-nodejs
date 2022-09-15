@@ -1,3 +1,4 @@
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -17,7 +18,8 @@ const express = require('express'),
     expressWinston = require('express-winston'),
     cookieParser = require('cookie-parser'),
     helmet = require('helmet'),
-    compression = require('compression');
+    compression = require('compression'),
+    path = require('path');
 
 const mongoConnectionStr = 'mongodb+srv://sid1605:sT2kdICiGGtnsmgz@cluster0.3o8fgzr.mongodb.net/myDb';
 const app = express();
@@ -94,7 +96,7 @@ class Server {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use('/', (req, res, next) => {
-            fs.appendFile('./logs/apiCalls.log', `${JSON.stringify({
+            fs.appendFile(path.join(__dirname, '../logs/apiCalls.log'), `${JSON.stringify({
                 url: req.url,
                 method: req.method,
                 origin: req.headers.origin,
@@ -112,7 +114,7 @@ class Server {
     initExpressWinstonLogger() {
         app.use(expressWinston.logger({
             transports: [
-                new winston.transports.File({ filename: './logs/logs.log' })
+                new winston.transports.File({ filename: path.join(__dirname, '../logs/logs.log') })
             ],
             format: winston.format.combine(
                 winston.format.json(),
@@ -128,8 +130,8 @@ class Server {
     }
 
     initStaticFiles() {
-        app.use('/public', express.static('public'));
-        app.use('/public', serveIndex('public'));
+        app.use('/public', express.static(path.join(__dirname, '../public')));
+        app.use('/public', serveIndex(path.join(__dirname, '../public')));
     }
 
     initViewEngine() {

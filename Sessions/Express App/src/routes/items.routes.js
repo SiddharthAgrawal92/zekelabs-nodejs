@@ -1,8 +1,8 @@
 
 const itemRoutes = require('express').Router();
-const Items = require('./items.model');
+const Items = require('../models/items.model');
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middlewares/auth.middleware.js');
+const auth = require('../middlewares/auth.middleware.js');
 
 /**
  * GET - HTTP method to get all items
@@ -82,13 +82,13 @@ itemRoutes.post('/', auth, [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
-    const socket_io_instance = req.app.get('socket_io_instance');
     Items.create(req.body, (err, items) => {
         if (err) {
             console.error(err);
             res.send('Error while storing items');
         } else {
             res.status(200).json(items);
+            const socket_io_instance = req.app.get('socket_io_instance');
             socket_io_instance.emit('server_data', items);
         }
     });

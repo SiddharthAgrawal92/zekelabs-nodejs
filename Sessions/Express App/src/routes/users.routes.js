@@ -1,6 +1,6 @@
 const UserRoutes = require('express').Router();
 const { check, validationResult } = require('express-validator');
-const User = require('./user.model');
+const User = require('../models/user.model');
 
 UserRoutes.post('/register', [
     check('userName', 'userName is required').exists(),

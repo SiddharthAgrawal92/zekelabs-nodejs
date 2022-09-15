@@ -254,3 +254,82 @@
 {"url":"/items","method":"POST","host":"127.0.0.1:8081","body":{"name":"Item A","type":"Something New","quantity":1,"price":400,"tags":[]},"query":{}}
 {"url":"/items","method":"POST","host":"127.0.0.1:8081","body":{"name":"Item A","type":"Something New","quantity":1,"price":400,"tags":[]},"query":{}}
 {"url":"/items","method":"POST","host":"127.0.0.1:8081","body":{"name":"Item A","type":"Something New","quantity":1,"price":400,"tags":[]},"query":{}}
+{"url":"/auth/login","method":"POST","origin":"http://localhost:3001","host":"localhost:8081","body":{"userName":"Heyy@123","password":""},"query":{}}
+{"url":"/auth/login","method":"POST","origin":"http://localhost:3001","host":"localhost:8081","body":{"userName":"Heyy@123","password":""},"query":{}}
+{"url":"/auth/login","method":"POST","origin":"http://localhost:3001","host":"localhost:8081","body":{"userName":"Heyy@123","password":""},"query":{}}
+{"url":"/auth/login","method":"POST","origin":"http://localhost:3001","host":"localhost:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/items","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/items","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/auth/login","method":"POST","host":"127.0.0.1:8081","body":{"userName":"jitendra123","password":"Heyy@123"},"query":{}}
+{"url":"/items","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/auth/login","method":"POST","origin":"http://localhost:3001","host":"localhost:8081","body":{"userName":"user123","password":"Bye@12345"},"query":{}}
+{"url":"/items","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid122"},"query":{}}
+{"url":"/posts","method":"POST","host":"127.0.0.1:8081","body":{"userName":"sid122","comment":"This article is very useful"},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"POST","host":"127.0.0.1:8081","body":{"userName":"ariana122","comment":"Awesome post"},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"POST","host":"127.0.0.1:8081","body":{"userName":"diana1221","comment":"Cool man you've written it pretty much good"},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"POST","host":"127.0.0.1:8081","body":{"userName":"maria321","comment":"Good article"},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts/632349540e01d3f7a135b542","method":"DELETE","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts/632349a8365a008a0d2b1e6a","method":"DELETE","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts/63234af1365a008a0d2b1e78","method":"DELETE","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"POST","host":"127.0.0.1:8081","body":{"userName":"diana1221","comment":"Cool man you've written it pretty much good"},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","origin":"http://localhost:3001","host":"localhost:8081","body":{},"query":{}}
+{"url":"/posts","method":"GET","host":"127.0.0.1:8081","body":{},"query":{}}
+{"url":"/posts/63234b14365a008a0d2b1e7c","method":"DELETE","host":"127.0.0.1:8081","body":{},"query":{}}
