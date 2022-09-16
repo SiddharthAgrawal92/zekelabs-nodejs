@@ -13,6 +13,13 @@ const createPost = (req, res) => {
 }
 
 const getAllPosts = (req, res) => {
+    // const filters = {
+    //     updated: {
+    //         $gte: new Date(2022, 8, 16), // 16-sep-2022 00:00
+    //         $lte: new Date(2022, 8, 17) // 17-sep-2022 00:00
+    //     }
+    // }
+    // Posts.find({}).where(filters).exec((err, posts) => {
     Posts.find({}).exec((err, posts) => {
         if (err) {
             return res.status(500).send({ err: 'Something went wrong' });

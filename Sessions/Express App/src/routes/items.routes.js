@@ -109,6 +109,17 @@ itemRoutes.put('/:id', auth, (req, res) => {
     });
 });
 
+// patch('/:id', (req, res)=>{
+//     req.body
+// })
+
+// let item: {
+//     _id: 101,
+//     name: "",
+//     quantity: 10,
+//     price: 12
+// }
+
 /**
  * DELETE - HTTP method to delete an item by ID
  */

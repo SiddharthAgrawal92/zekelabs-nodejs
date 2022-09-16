@@ -11,6 +11,7 @@ function App() {
   const [serverPackets, setServerPackets] = useState([]);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     getPosts();
@@ -68,6 +69,7 @@ function App() {
       "password": password
     }, { withCredentials: true }).then(res => {
       setData(res.data);
+      setIsLoggedIn(true);
       // if (res.data && res.data.access_token) {
       //   indexedDB.open('access_token');
       //   indexedDB.access_token = res.data.access_token;
@@ -87,7 +89,12 @@ function App() {
 
   const getData = () => {
     setData([]);
-    axios.get('http://localhost:8081/items', { withCredentials: true }).then(res => {
+    // axios.get('http://localhost:8081/items', { withCredentials: true }).then(res => {
+    //   if (res.data) {
+    //     setData(res.data);
+    //   }
+    // });
+    axios.get('http://localhost:8081/practice/getBulkData', { withCredentials: true }).then(res => {
       if (res.data) {
         setData(res.data);
       }
@@ -104,7 +111,7 @@ function App() {
   return (
     <>
       {/* <header className="App-header"> */}
-      {/* Response : {JSON.stringify(data)} */}
+      Response : {JSON.stringify(data)}
       {/* <br />
         <br />
         <button onClick={getData}>Get Data</button>
@@ -114,14 +121,19 @@ function App() {
         <button onClick={sendToServerUsingWS}>Send Data to Server using WS</button>
         Server Packets :
         <br />*/}
-      Username<input type={'text'} onChange={(e) => {
-        setUserName(e.target.value);
-      }} />
-      Password<input type={'password'} onChange={(e) => {
-        setPassword(e.target.value);
-        console.log(e.target.value);
-      }} />
-      <button onClick={handleLogin}>Login</button> &nbsp;&nbsp;
+      {
+        isLoggedIn ? '' :
+          <>
+            Username<input type={'text'} onChange={(e) => {
+              setUserName(e.target.value);
+            }} />
+            Password<input type={'password'} onChange={(e) => {
+              setPassword(e.target.value);
+              console.log(e.target.value);
+            }} />
+            <button onClick={handleLogin}>Login</button> &nbsp;&nbsp;
+          </>
+      }
       <button onClick={handleRefreshToken}>Refresh Token</button> &nbsp;&nbsp;
       <button onClick={getData}>Get Data Using API</button>
       <br />

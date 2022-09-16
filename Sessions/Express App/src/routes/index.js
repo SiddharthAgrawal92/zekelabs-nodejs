@@ -4,6 +4,28 @@ const UserRoutes = require('./users.routes');
 const AuthRoutes = require('./auth.routes');
 const path = require('path');
 const PostsRoutes = require('./posts.routes');
+const practiceRoutes = require('./practice.routes');
+
+routes.use('/practice', practiceRoutes);
+
+routes.use('/items', itemRoutes);
+
+routes.use('/user', UserRoutes);
+
+routes.use('/auth', AuthRoutes);
+
+routes.use('/posts', PostsRoutes);
+
+/**
+ * one way to handle invalid routes but this needs to be handled for every http methods
+ */
+// routes.get('*', (req, res) => {
+//     res.status(404).send('Sorry, this URI is not supported by our app!');
+// });
+
+// routes.post('*', (req, res) => {
+//     res.status(404).send('Sorry, this URI is not supported by our app!');
+// });
 
 routes.get('/', (req, res) => {
     res.render('index3', { name: 'sid', message: "This message is send from server" });
@@ -28,25 +50,6 @@ routes.get('/', (req, res) => {
     // });
     // res.send('Connected!');
 });
-
-routes.use('/items', itemRoutes);
-
-routes.use('/user', UserRoutes);
-
-routes.use('/auth', AuthRoutes);
-
-routes.use('/posts', PostsRoutes);
-
-/**
- * one way to handle invalid routes but this needs to be handled for every http methods
- */
-// routes.get('*', (req, res) => {
-//     res.status(404).send('Sorry, this URI is not supported by our app!');
-// });
-
-// routes.post('*', (req, res) => {
-//     res.status(404).send('Sorry, this URI is not supported by our app!');
-// });
 
 /**
  * This can handle all http methods
