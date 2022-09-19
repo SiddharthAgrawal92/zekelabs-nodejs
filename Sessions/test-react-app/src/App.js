@@ -2,43 +2,83 @@ import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import socketClient from 'socket.io-client';
+import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
+import DatePicker from 'react-date-picker';
 const socketUrl = 'http://localhost:8085';
 const apiUrl = 'http://localhost:8081'
 let socket = socketClient(socketUrl);
 
-function App() {
-  const [data, setData] = useState('');
+const App = () => (
+  <Router>
+    <Navigation />
+    <Content />
+  </Router>
+)
+
+const Navigation = () => (
+  <ul>
+    <li>
+      <Link to="/">Homepage</Link>
+    </li>
+    <li>
+      <Link to="/iot">Filter Packets By Date & Time</Link>
+    </li>
+  </ul>
+)
+
+const Content = () => (
+  <Routes>
+    <Route exact path="/" element={<Homepage />} />
+    <Route exact path="/iot/*" element={<IOT />} />
+  </Routes>
+)
+
+const Homepage = () => {
+  const [data, setData] = useState([]);
   const [serverPackets, setServerPackets] = useState([]);
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    getPosts();
-    socket.on('server_data', msg => {
-      setServerPackets(prevVal => {
-        prevVal = [...prevVal, msg];
-        return prevVal;
-      });
-    });
-
-    socket.on('post-deleted', postId => {
-      setServerPackets(prevVal => {
-        const foundIndex = prevVal.findIndex(post => post._id === postId);
-        if (foundIndex > -1) {
-          prevVal.splice(foundIndex, 1);
+    /**
+     * For IOT Assignment API endpoint
+     */
+    getPackets();
+    socket.on('new-packets', newPackets => {
+      setData(prevVal => {
+        if ((newPackets.length + prevVal.length) > 20) {
+          prevVal = [...newPackets, ...prevVal];
+          prevVal.splice(20);
         }
-        const newVal = Object.assign([], prevVal);
-        return newVal;
-      });
+        return prevVal;
+      })
     })
+
+
+    /** For Posts API endpoint */
+    // getPosts();
+    // socket.on('server_data', msg => {
+    //   setServerPackets(prevVal => {
+    //     prevVal = [...prevVal, msg];
+    //     return prevVal;
+    //   });
+    // });
+
+    // socket.on('post-deleted', postId => {
+    //   setServerPackets(prevVal => {
+    //     const foundIndex = prevVal.findIndex(post => post._id === postId);
+    //     if (foundIndex > -1) {
+    //       prevVal.splice(foundIndex, 1);
+    //     }
+    //     const newVal = Object.assign([], prevVal);
+    //     return newVal;
+    //   });
+    // })
   }, [])
 
-  const getPosts = () => {
-    axios.get(apiUrl + '/posts', { withCredentials: true }).then(res => {
-      setServerPackets(res.data.result);
-    })
-  }
+  // const getPosts = () => {
+  //   axios.get(apiUrl + '/posts', { withCredentials: true }).then(res => {
+  //     setServerPackets(res.data.result);
+  //   })
+  // }
 
   // //button to show all movies having IMDB rating > 8
   // const postData = async () => {
@@ -58,18 +98,14 @@ function App() {
   //   socket.current.emit('client_evt', { interval: 2000, date: new Date(), origin: window.location.origin });
   // }
 
-  //"userName": "jitendra123",
-  // "password": "Heyy@123"
-
   // "userName": "user123",
   // "password": "Bye@12345",
   const handleLogin = () => {
     axios.post(apiUrl + '/auth/login', {
-      "userName": userName,
-      "password": password
+      "userName": "jitendra123",
+      "password": "Heyy@123"
     }, { withCredentials: true }).then(res => {
       setData(res.data);
-      setIsLoggedIn(true);
       // if (res.data && res.data.access_token) {
       //   indexedDB.open('access_token');
       //   indexedDB.access_token = res.data.access_token;
@@ -108,10 +144,21 @@ function App() {
   //   return config;
   // })
 
+  const createPackets = () => {
+    axios.post(`${apiUrl}/practice/random-values`, { count: 20 }, { withCredentials: true });
+  }
+
+  const getPackets = () => {
+    axios.get(`${apiUrl}/practice/random-values?count=20`, { withCredentials: true }).then(res => {
+      if (res.data && res.data.result && res.data.result.length) {
+        setData(res.data.result);
+      }
+    })
+  }
+
   return (
     <>
       {/* <header className="App-header"> */}
-      Response : {JSON.stringify(data)}
       {/* <br />
         <br />
         <button onClick={getData}>Get Data</button>
@@ -121,24 +168,22 @@ function App() {
         <button onClick={sendToServerUsingWS}>Send Data to Server using WS</button>
         Server Packets :
         <br />*/}
-      {
-        isLoggedIn ? '' :
-          <>
-            Username<input type={'text'} onChange={(e) => {
-              setUserName(e.target.value);
-            }} />
-            Password<input type={'password'} onChange={(e) => {
-              setPassword(e.target.value);
-              console.log(e.target.value);
-            }} />
-            <button onClick={handleLogin}>Login</button> &nbsp;&nbsp;
-          </>
-      }
+      <button onClick={handleLogin}>Login</button> &nbsp;&nbsp;
       <button onClick={handleRefreshToken}>Refresh Token</button> &nbsp;&nbsp;
       <button onClick={getData}>Get Data Using API</button>
+      <button onClick={createPackets}>Create Packets</button>
       <br />
       <br />
-      {
+      Response : {
+        data.map((packet, index) => {
+          return (
+            <ul>
+              <li>{index + 1}</li>{JSON.stringify(packet)}
+            </ul>
+          )
+        })
+      }
+      {/* {
         serverPackets.map(post => {
           return (
             <div id={post._id}>
@@ -151,10 +196,62 @@ function App() {
             </div>
           )
         })
-      }
+      } */}
       {/* </header> */}
     </>
   );
+}
+
+const IOT = () => {
+
+  const [startDate, handleStartDate] = useState(new Date());
+  const [endDate, handleEndDate] = useState(new Date());
+  const [data, setData] = useState([]);
+
+  const handleSubmit = () => {
+    if (startDate && endDate) {
+      setData([]);
+      axios.get(`${apiUrl}/practice/random-values?startDate=${startDate}&endDate=${endDate}`, { withCredentials: true }).then(res => {
+        if (res.data && res.data.result && res.data.result.length) {
+          setData(res.data.result);
+        }
+      })
+    }
+  }
+
+  return (
+    <>
+      Start Date & Time<DatePicker onChange={handleStartDate} value={startDate} />&nbsp; &nbsp;
+      End Date & Time<DatePicker onChange={handleEndDate} value={endDate} />&nbsp; &nbsp;
+      <button onClick={handleSubmit}>Submit</button>
+      <br />
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th>Temperature</th>
+            <th>Battery Level</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.length ?
+              data.map(packet => {
+                return (
+                  <tr>
+                    <td>{packet.temperature}</td>
+                    <td>{packet.batteryLevel}</td>
+                    <td>{new Date(packet.timeStamp).toLocaleString()}</td>
+                  </tr>
+                )
+              }) :
+              'No records found'
+          }
+        </tbody>
+      </table>
+    </>
+  )
 }
 
 export default App;
