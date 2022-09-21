@@ -21,10 +21,11 @@ const getAllPosts = (req, res) => {
     // }
     // Posts.find({}).where(filters).exec((err, posts) => {
     Posts.find({}).exec((err, posts) => {
+        console.log('inside get Posts');
         if (err) {
             return res.status(500).send({ err: 'Something went wrong' });
         } else {
-            res.status(201).send({ result: posts });
+            res.status(200).send({ result: posts });
         }
     })
 }

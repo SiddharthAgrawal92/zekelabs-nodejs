@@ -16,7 +16,7 @@ const verifyToken = (req, res, next) => {
         // decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_PRIVATE_KEY);
         // }
 
-        const decoded = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_PRIVATE_KEY);
+        const decoded = jwt.verify(token, process.env.NODE_ENV === 'test'? process.env.TEST_JWT_ACCESS_TOKEN_PRIVATE_KEY :  process.env.JWT_ACCESS_TOKEN_PRIVATE_KEY);
         req.user = decoded;
     } catch (e) {
         if (e instanceof jwt.JsonWebTokenError) {

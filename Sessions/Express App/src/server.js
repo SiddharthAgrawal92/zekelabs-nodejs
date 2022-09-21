@@ -1,7 +1,8 @@
 
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+require('dotenv').config();
+// }
+const config = require('./config/config');
 const express = require('express'),
     bodyParser = require('body-parser'),
     routes = require('./routes'),
@@ -21,7 +22,7 @@ const express = require('express'),
     compression = require('compression'),
     path = require('path');
 
-const mongoConnectionStr = 'mongodb+srv://sid1605:sT2kdICiGGtnsmgz@cluster0.3o8fgzr.mongodb.net/myDb';
+const mongoConnectionStr = config.db.connectionString;
 const app = express();
 
 class Server {
@@ -146,13 +147,15 @@ class Server {
     }
 
     start() {
-        app.listen(process.env.PORT, process.env.HOSTNAME, () => {
-            console.log(`Server is running on port: http://${process.env.HOSTNAME}:${process.env.PORT}`);
+        app.listen(config.app.port, config.app.host, () => {
+            console.log(`Server is running on port: http://${config.app.host}:${config.app.port}`);
         });
     }
 }
 
 new Server();
+
+module.exports = app;
 //use case 1 - login from server
 //frontend app
 // http://frontend=-app.com

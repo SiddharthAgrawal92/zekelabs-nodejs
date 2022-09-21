@@ -29,4 +29,10 @@ E.g: Are we building the right product?
 0  0    0   0   0   0   0   0   0   --> Unit tests
 
 
+Testing Frameworks
+1. jest
+2. mocha - testing environment and use your favorite assertion library to write the test cases
 
+Assertion Library
+1. chai - different styles to test e.g. should, expect, asset
+2. chai-http - used to test the API endpoints
