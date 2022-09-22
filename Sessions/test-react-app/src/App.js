@@ -37,30 +37,37 @@ const Homepage = () => {
   const [data, setData] = useState([]);
   const [serverPackets, setServerPackets] = useState([]);
 
+  const [sortOrder, setSortOrder] = useState('-1');
+
+
+  useEffect(() => {
+    getPosts();
+  }, [sortOrder]);
+
   useEffect(() => {
     /**
      * For IOT Assignment API endpoint
      */
-    getPackets();
-    socket.on('new-packets', newPackets => {
-      setData(prevVal => {
-        if ((newPackets.length + prevVal.length) > 20) {
-          prevVal = [...newPackets, ...prevVal];
-          prevVal.splice(20);
-        }
-        return prevVal;
-      })
-    })
+    // getPackets();
+    // socket.on('new-packets', newPackets => {
+    //   setData(prevVal => {
+    //     if ((newPackets.length + prevVal.length) > 20) {
+    //       prevVal = [...newPackets, ...prevVal];
+    //       prevVal.splice(20);
+    //     }
+    //     return prevVal;
+    //   })
+    // })
 
 
     /** For Posts API endpoint */
-    // getPosts();
-    // socket.on('server_data', msg => {
-    //   setServerPackets(prevVal => {
-    //     prevVal = [...prevVal, msg];
-    //     return prevVal;
-    //   });
-    // });
+    getPosts();
+    socket.on('server_data', msg => {
+      setServerPackets(prevVal => {
+        prevVal = [...prevVal, msg];
+        return prevVal;
+      });
+    });
 
     // socket.on('post-deleted', postId => {
     //   setServerPackets(prevVal => {
@@ -74,11 +81,12 @@ const Homepage = () => {
     // })
   }, [])
 
-  // const getPosts = () => {
-  //   axios.get(apiUrl + '/posts', { withCredentials: true }).then(res => {
-  //     setServerPackets(res.data.result);
-  //   })
-  // }
+  const getPosts = () => {
+
+    axios.get(apiUrl + `/posts?sortBy=updated&sortOrder=${sortOrder}`, { withCredentials: true }).then(res => {
+      setServerPackets(res.data.result);
+    })
+  }
 
   // //button to show all movies having IMDB rating > 8
   // const postData = async () => {
@@ -172,9 +180,13 @@ const Homepage = () => {
       <button onClick={handleRefreshToken}>Refresh Token</button> &nbsp;&nbsp;
       <button onClick={getData}>Get Data Using API</button>
       <button onClick={createPackets}>Create Packets</button>
+      <button onClick={() => {
+        let newSortOrder = sortOrder === '-1' ? '1' : '-1';
+        setSortOrder(newSortOrder);
+      }}>Sort Posts +/-</button>
       <br />
       <br />
-      Response : {
+      {/* Response : {
         data.map((packet, index) => {
           return (
             <ul>
@@ -182,8 +194,8 @@ const Homepage = () => {
             </ul>
           )
         })
-      }
-      {/* {
+      } */}
+      {
         serverPackets.map(post => {
           return (
             <div id={post._id}>
@@ -196,7 +208,7 @@ const Homepage = () => {
             </div>
           )
         })
-      } */}
+      }
       {/* </header> */}
     </>
   );

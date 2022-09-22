@@ -27,12 +27,12 @@ const app = express();
 
 class Server {
     constructor() {
-        this.initExpressWinstonLogger();
+        this.initMiddleWares();
         this.initDB();
+        this.initLogsHandler();
         this.initSocketConnection();
         this.initViewEngine();
         this.initStaticFiles();
-        this.initMiddleWares();
         this.initRoutes();
         this.start();
     }
@@ -97,36 +97,45 @@ class Server {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use('/', (req, res, next) => {
-            fs.appendFile(path.join(__dirname, '../logs/apiCalls.log'), `${JSON.stringify({
-                url: req.url,
-                method: req.method,
-                origin: req.headers.origin,
-                userAgent: req.headers['User-Agent'],
-                host: req.headers.host,
-                body: req.body,
-                query: req.params
-            })}\n`, 'utf-8', (err) => {
-                if (err) throw err;
-            })
+            if (req.headers['CalledFrom'] === 'Mocha-Test') {
+                fs.appendFile(path.join(__dirname, '../logs/apiCalls.log'), `${JSON.stringify({
+                    url: req.url,
+                    method: req.method,
+                    origin: req.headers.origin,
+                    userAgent: req.headers['User-Agent'],
+                    host: req.headers.host,
+                    body: req.body,
+                    query: req.params
+                })}\n`, 'utf-8', (err) => {
+                    if (err) throw err;
+                })
+            }
             next();
         });
     }
 
-    initExpressWinstonLogger() {
+    initLogsHandler() {
         app.use(expressWinston.logger({
             transports: [
                 new winston.transports.File({ filename: path.join(__dirname, '../logs/logs.log') })
             ],
             format: winston.format.combine(
-                winston.format.json(),
                 winston.format.colorize(),
+                winston.format.json()
             ),
             meta: true,
             msg: "HTTP {{req.method}} {{req.url}}",
             expressFormat: true,
-            colorize: true,
-            ignoredRoutes: ['/auth/login', '/user/register'],
-            headerBlacklist: ['x-access-token', 'cookie']
+            colorize: false,
+            // ignoredRoutes: ['/auth/login', '/user/register'],
+            ignoreRoute: function (req, res) {
+                if (process.env.ROUTES_TO_BE_IGNORED.indexOf(req.url) !== -1 || req.headers['from'] === 'Mocha-Test') {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            headerBlacklist: ['x-access-token', 'cookie'],
         }))
     }
 

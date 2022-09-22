@@ -20,8 +20,16 @@ const getAllPosts = (req, res) => {
     //     }
     // }
     // Posts.find({}).where(filters).exec((err, posts) => {
-    Posts.find({}).exec((err, posts) => {
-        console.log('inside get Posts');
+    let sortObj = {};
+    if (req.query.sortBy && req.query.sortOrder) {
+        sortObj = { [req.query.sortBy]: parseInt(req.query.sortOrder) };
+    }
+    // .sort({field_1: -1, field_2: 1}) 
+    // -- sorting will work on first field first and if 2 or more has same 
+    //value in "field_1" then it will move to "field_2" for the sorting
+    // 22/9/2022-00:00:00 ABC 
+    // 22/9/2022-00:00:00 XYZ
+    Posts.find({}).sort(sortObj).exec((err, posts) => {
         if (err) {
             return res.status(500).send({ err: 'Something went wrong' });
         } else {

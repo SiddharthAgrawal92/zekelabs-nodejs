@@ -15,7 +15,7 @@ describe('/posts endpoint', () => {
                 algorithm: 'HS256',
                 expiresIn: process.env.TEST_JWT_ACCESS_TOKEN_EXPIRES_IN
             });
-            chai.request(server).get('/posts').set('Cookie', `access_token=${token}`).end((err, response) => {
+            chai.request(server).get('/posts').set('Cookie', `access_token=${token}`).set('from', 'Mocha-Test').end((err, response) => {
                 // response.should.have.status(200);
                 // response.body.should.be.an('object');
                 // response.body.result.should.be.an('array');
